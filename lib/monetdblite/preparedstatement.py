@@ -4,6 +4,9 @@
 #
 # Copyright 1997 - July 2008 CWI, August 2008 - 2018 MonetDB B.V.
 
+from monetdblite import monetize
+from monetdblite import embeddedmonetdb
+
 
 class PreparedStatement:
     def __init__(self, stmt_id, client, type_array, query_text):
@@ -19,5 +22,15 @@ class PreparedStatement:
         retval = "Statement id: {}\nQuery:\n  {}\nParameter types:\n{}".format(self._stmt_id, self._query_text, tmpstr)
         return retval
 
-    def execute(*args):
+    def execute(self, *args):
+        print(args)
+        monetized_args = [monetize.convert(x) for x in args]
+        monetized_args_list = ",".join(monetized_args)
+        # TODO: make sure this is what we need to be doing.
+        exec_string = "exec {}({})".format(self._stmt_id, monetized_args_list)
+        print("exec_string: ", exec_string)
+
+        return embeddedmonetdb.sql(exec_string)
+
+    def release():
         pass
