@@ -23,12 +23,10 @@ class PreparedStatement:
         return retval
 
     def execute(self, *args):
-        print(args)
         monetized_args = [monetize.convert(x) for x in args]
         monetized_args_list = ",".join(monetized_args)
         # TODO: make sure this is what we need to be doing.
-        exec_string = "exec {}({})".format(self._stmt_id, monetized_args_list)
-        print("exec_string: ", exec_string)
+        exec_string = "execute {}({})".format(self._stmt_id, monetized_args_list)
 
         return embeddedmonetdb.sql(exec_string)
 
