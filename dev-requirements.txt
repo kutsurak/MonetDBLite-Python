@@ -1,4 +1,4 @@
-pytest
+pytest==3.9.2
 twine
 pypandoc
 numpy>=1.7
