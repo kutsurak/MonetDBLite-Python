@@ -1,5 +1,5 @@
 pytest==3.9.2
-twine
+twine==1.12.1
 pypandoc
 numpy>=1.7
 pandas>=0.20
