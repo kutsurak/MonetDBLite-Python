@@ -10,7 +10,7 @@ import monetdblite
 @pytest.fixture(scope="function")
 def monetdblite_cursor():
     test_dbfarm = tempfile.mkdtemp()
-    connection = monetdblite.make_connection(test_dbfarm)
+    connection = monetdblite.connect(test_dbfarm)
     cursor = connection.cursor()
     cursor.create('integers', {'i': numpy.arange(10)})
     cursor.execute('INSERT INTO integers VALUES(NULL)')
@@ -26,7 +26,7 @@ def monetdblite_cursor():
 @pytest.fixture(scope="function")
 def monetdblite_cursor_autocommit():
     test_dbfarm = tempfile.mkdtemp()
-    connection = monetdblite.make_connection(test_dbfarm)
+    connection = monetdblite.connect(test_dbfarm)
     connection.set_autocommit(True)
     cursor = connection.cursor()
     yield (cursor, connection, test_dbfarm)
