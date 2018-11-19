@@ -46,3 +46,14 @@ def initialize_monetdblite():
     monetdblite.shutdown()
     if os.path.isdir(test_dbfarm):
         shutil.rmtree(test_dbfarm)
+
+
+@pytest.fixture(scope="function")
+def raw_connection():
+    test_dbfarm = tempfile.mkdtemp()
+    connection = monetdblite.connect(test_dbfarm)
+
+    yield(connection, test_dbfarm)
+    connection.close()
+    if os.path.isdir(test_dbfarm):
+        shutil.rmtree(test_dbfarm)
